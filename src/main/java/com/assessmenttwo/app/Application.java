@@ -1,13 +1,13 @@
-package com.itsrore.assessmenttwo;
+package com.assessmenttwo.app;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class AssessmentTwoApplication {
+public class Application {
 
     public static void main(String[] args) {
-        SpringApplication.run(AssessmentTwoApplication.class, args);
+        SpringApplication.run(Application.class, args);
     }
 
 }
