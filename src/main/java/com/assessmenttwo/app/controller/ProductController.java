@@ -14,7 +14,7 @@ import java.util.List;
 @Controller
 public class ProductController {
 
-    private ProductRepository repository;
+    private final ProductRepository repository;
 
     public ProductController(ProductRepository repo){
         repository = repo;

@@ -1,10 +1,138 @@
-<!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout = "http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Edit Customer</title>
 </head>
-<body>
+<body layout:fragment="body" >
 
+
+<div class="row">
+    <div class="col-xl-5 col-lg-6 col-md-12  align-self-start">
+        <div class="card mt-4 mb-3">
+            <div class="card-header">
+                <h2>Update Customer</h2>
+            </div>
+            <div class="card-body">
+                <form class="p-4" role="form" method="post" th:action="@{/customers/{customerId}/edit(customerId=${customer.id})}" th:object="${customer}">
+                    <input type="hidden" th:field="*{id}" name="" id="">
+                    <div class="form-floating mb-3">
+                        <input
+                                type="text"
+                                class="form-control"
+                                id="firstName"
+                                name="firstName"
+                                th:field="*{firstName}"
+                                placeholder="First name">
+                        <label for="firstName" class="form-label">First name</label>
+                    </div>
+                    <div class="form-floating mb-3">
+
+                        <input
+                                type="text"
+                                class="form-control"
+                                id="lastName"
+                                name="lastName"
+                                th:field="*{lastName}"
+                                placeholder="Last name">
+                        <label for="lastName" class="form-label">Last name</label>
+                    </div>
+
+                    <div class="row g-2 mt-4">
+                        <div class="col-md">
+                            <div class="form-floating mb-3">
+
+                                <input
+                                        type="email"
+                                        class="form-control"
+                                        id="email"
+                                        name="email"
+                                        th:field="*{email}"
+                                        placeholder="Email">
+                                <label for="email" class="form-label">Email</label>
+                            </div>
+                        </div>
+                        <div class="col-md">
+                            <div class="form-floating mb-3">
+
+                                <input
+                                        type="tel"
+                                        class="form-control"
+                                        id="phone"
+                                        name="phone"
+                                        th:field="*{phone}"
+                                        placeholder="Phone">
+                                <label for="phone" class="form-label">Phone</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-floating mb-3 mt-3">
+
+                        <input
+                                type="text"
+                                class="form-control"
+                                id="street"
+                                name="street"
+                                th:field="*{street}"
+                                placeholder="Street address">
+                        <label for="street" class="form-label">Address</label>
+                    </div>
+                    <div class="row g-3">
+                        <div class="col-md">
+                            <div class="form-floating mb-3">
+
+                                <input
+                                        type="text"
+                                        class="form-control"
+                                        id="suburb"
+                                        name="suburb"
+                                        th:field="*{suburb}"
+                                        placeholder="Suburb">
+                                <label for="suburb" class="form-label">Suburb</label>
+                            </div>
+                        </div>
+                        <div class="col-md">
+
+                            <div class="form-floating mb-3">
+
+                                <input
+                                        type="text"
+                                        class="form-control"
+                                        id="state"
+                                        name="state"
+                                        th:field="*{state}"
+                                        placeholder="State">
+                                <label for="state" class="form-label">State</label>
+                            </div>
+                        </div>
+                        <div class="col-md">
+                            <div class="form-floating mb-3">
+
+                                <input
+                                        type="text"
+                                        class="form-control"
+                                        id="postcode"
+                                        name="postcode"
+                                        th:field="*{postcode}"
+                                        placeholder="Postcode">
+                                <label for="postcode" class="form-label">Postcode</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row align-content-end mt-4">
+                        <div class="col"></div>
+                        <div class="col-auto">
+                            <a class="btn btn-outline-danger ms-auto me-1" th:href="@{/customers}">Cancel</a>
+                            <button type="submit" class="btn btn-outline-primary ms-auto me-0">Update</button>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 </html>

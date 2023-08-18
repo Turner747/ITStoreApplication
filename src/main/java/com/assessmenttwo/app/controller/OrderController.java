@@ -14,7 +14,7 @@ import java.util.List;
 @Controller
 public class OrderController {
     
-    private OrderRepository repository;
+    private final OrderRepository repository;
     
     public OrderController(OrderRepository repo){
         repository = repo;

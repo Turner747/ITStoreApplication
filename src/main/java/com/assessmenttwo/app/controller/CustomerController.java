@@ -4,17 +4,14 @@ import com.assessmenttwo.app.model.Customer;
 import com.assessmenttwo.app.repository.CustomerRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @Controller
 public class CustomerController {
 
-    private CustomerRepository repository;
+    private final CustomerRepository repository;
 
     public CustomerController(CustomerRepository repo){
         repository = repo;
@@ -23,6 +20,13 @@ public class CustomerController {
     @GetMapping("/customers")
     public String customerList(Model model){
         List<Customer> customers = repository.findAll();
+        model.addAttribute("customers", customers);
+        return "customer-list";
+    }
+
+    @GetMapping("/customers/search")
+    public String customerList(@RequestParam(value = "query")String query, Model model){
+        List<Customer> customers = repository.searchCustomers(query);
         model.addAttribute("customers", customers);
         return "customer-list";
     }

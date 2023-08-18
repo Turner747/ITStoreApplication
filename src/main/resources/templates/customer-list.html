@@ -1,10 +1,71 @@
-<!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout = "http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Customers</title>
 </head>
-<body>
+<body layout:fragment="body">
+    <h1 class="mt-4 mb-3">Customers</h1>
+    <div class="card mb-4">
+        <div class="card-header">
+            <div class="row">
+                <div class="col">
+                    <a class="btn btn-outline-success" th:href="@{/customers/add}"><i class="fa-solid fa-plus"></i></a>
 
+                </div>
+                <div class="col-auto">
+                    <div class="btn-toolbar">
+                        <form th:action="@{/customers/search}" class="me-2">
+                            <div class="input-group">
+                                <span class="input-group-text" id="Search">Search</span>
+                                <input name="query"
+                                       class="form-control"
+                                       type="search"
+                                       placeholder="Enter customer name"
+                                       aria-label="Search">
+                            </div>
+                        </form>
+                        <a class="btn btn-outline-dark" th:href="@{/customers}"><i class="fa-solid fa-arrows-rotate"></i></a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">First name</th>
+                    <th scope="col">Last name</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Phone</th>
+                    <th scope="col">Address</th>
+                    <th scope="col">Created</th>
+                    <th scope="col"></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="customer :${customers}" class="align-middle">
+                    <td th:text="${customer.id}"></td>
+                    <td th:text="${customer.firstName}"></td>
+                    <td th:text="${customer.lastName}"></td>
+                    <td th:text="${customer.email}"></td>
+                    <td th:text="${customer.phone}"></td>
+                    <td th:text="${customer.street} + ', ' + ${customer.suburb} + ' ' + ${customer.state} + ' ' + ${customer.postcode}"></td>
+                    <td th:text="${customer.createdOn.toLocalDate()}"></td>
+                    <td class="text-end">
+                        <a class="btn btn-outline-primary" th:href="@{/customers/{customerId}(customerId=${customer.id})}">
+                            <i class="fa-solid fa-eye"></i>
+                        </a>
+                        <a class="btn btn-outline-warning" th:href="@{/customers/{customerId}/edit(customerId=${customer.id})}">
+                            <i class="fa-solid fa-pen-to-square"></i>
+                        </a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 </body>
 </html>

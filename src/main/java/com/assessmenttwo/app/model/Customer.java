@@ -31,6 +31,7 @@ public class Customer {
     private String postcode;
 
     @CreationTimestamp
+    @Column(name= "created_on", nullable = false, updatable = false)
     private LocalDateTime createdOn;
     @UpdateTimestamp
     private LocalDateTime updatedOn;
