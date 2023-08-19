@@ -25,7 +25,7 @@ public class CustomerController {
     }
 
     @GetMapping("/customers/search")
-    public String customerList(@RequestParam(value = "query")String query, Model model){
+    public String searchCustomers(@RequestParam(value = "query")String query, Model model){
         List<Customer> customers = repository.searchCustomers(query);
         model.addAttribute("customers", customers);
         return "customer-list";

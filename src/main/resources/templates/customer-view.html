@@ -55,11 +55,11 @@
                 </div>
                 <div class="mb-2">
                     <p class="fw-semibold d-inline">Created on:</p>
-                    <p class="d-inline" th:text="*{createdOn.toLocalDate()}"></p>
+                    <p class="d-inline" th:text="${#temporals.format(customer.createdOn, 'dd-MM-yyyy HH:mm')}"></p>
                 </div>
                 <div class="mb-2">
                     <p class="fw-semibold d-inline">Updated on:</p>
-                    <p class="d-inline" th:if="${customer.updatedOn != null}" th:text="*{updatedOn.toLocalDate()}"></p>
+                    <p class="d-inline" th:if="${customer.updatedOn != null}" th:text="${#temporals.format(customer.updatedOn, 'dd-MM-yyyy HH:mm')}"></p>
                 </div>
             </div>
         </div>

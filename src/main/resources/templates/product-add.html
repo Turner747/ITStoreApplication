@@ -1,10 +1,109 @@
-<!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout = "http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Add Product</title>
 </head>
-<body>
+<body layout:fragment="body" >
 
+<div class="row mt-4">
+    <div class="col">
+        <a class="btn btn-outline-dark" th:href="@{/products}">
+            <i class="fa-solid fa-circle-chevron-left"></i> Back
+        </a>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xl-5 col-lg-6 col-md-12  align-self-start">
+        <div class="card mt-4 mb-3">
+            <div class="card-header">
+                <h2>New Product</h2>
+            </div>
+            <div class="card-body">
+                <form class="p-4" role="form" method="post" th:action="@{/products/add}" th:object="${product}">
+                    <div class="form-floating mb-3">
+                        <input
+                                type="text"
+                                class="form-control"
+                                id="name"
+                                name="name"
+                                th:field="*{name}"
+                                placeholder="Name">
+                        <label for="name" class="form-label">Name</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <textarea
+                                type="text"
+                                class="form-control"
+                                id="description"
+                                name="description"
+                                th:field="*{description}"
+                                placeholder="Description"
+                                style="height: 100px">
+                        </textarea>
+                        <label for="description" class="form-label">Description</label>
+                    </div>
+
+                    <div class="row g-2 mt-4">
+                        <div class="col-md">
+                            <div class="form-floating mb-3">
+                                <select
+                                        class="form-select"
+                                        id="category"
+                                        name="category"
+                                        th:field="*{category}">
+                                    <option th:value="${''}" th:text="${'Select a category'}" th:selected="${product.category == ''}"></option>
+                                    <option th:value="Computers" th:text="Computer" th:selected="${product.category == 'Computer'}"></option>
+                                    <option th:value="Phones" th:text="Phones" th:selected="${product.category == 'Phones'}"></option>
+                                    <option th:value="Monitors" th:text="Monitors" th:selected="${product.category == 'Monitors'}"></option>
+                                    <option th:value="Keyboards" th:text="Keyboards" th:selected="${product.category == 'Keyboards'}"></option>
+                                    <option th:value="Mice" th:text="Mice" th:selected="${product.category == 'Mice'}"></option>
+                                    <option th:value="Tablets" th:text="Tablets" th:selected="${product.category == 'Tablets'}"></option>
+                                    <option th:value="Laptops" th:text="Laptops" th:selected="${product.category == 'Laptops'}"></option>
+                                    <option th:value="Software" th:text="Software" th:selected="${product.category == 'Software'}"></option>
+                                    <option th:value="Other" th:text="Other" th:selected="${product.category == 'Other'}"></option>
+                                </select>
+                                <label for="category">Category</label>
+                            </div>
+                        </div>
+                        <div class="col-md">
+                            <div class="form-floating mb-3">
+
+                                <input
+                                        type="text"
+                                        class="form-control"
+                                        id="price"
+                                        name="price"
+                                        th:field="*{price}"
+                                        placeholder="Price">
+                                <label for="price" class="form-label">Price</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-floating mb-3 mt-3">
+                        <input
+                                type="text"
+                                class="form-control"
+                                id="inStock"
+                                name="inStock"
+                                th:field="*{inStock}"
+                                placeholder="Available stock">
+                        <label for="inStock" class="form-label">Available stock</label>
+                    </div>
+
+                    <div class="row align-content-end mt-4">
+                        <div class="col"></div>
+                        <div class="col-auto">
+                            <a class="btn btn-outline-danger ms-auto me-1" th:href="@{/products}">Cancel</a>
+                            <button type="submit" class="btn btn-outline-primary ms-auto me-0">Add</button>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 </html>

@@ -22,10 +22,12 @@ public class Product {
     private Long id;
     private String name;
     private String description;
-    private double price;
-    private int inStock;
+    private String category;
+    private Double price;
+    private Integer inStock;
 
     @CreationTimestamp
+    @Column(name= "created_on", nullable = false, updatable = false)
     private LocalDateTime createdOn;
     @UpdateTimestamp
     private LocalDateTime updatedOn;

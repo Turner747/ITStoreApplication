@@ -4,10 +4,7 @@ import com.assessmenttwo.app.model.Product;
 import com.assessmenttwo.app.repository.ProductRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -23,6 +20,13 @@ public class ProductController {
     @GetMapping("/products")
     public String productList(Model model){
         List<Product> products = repository.findAll();
+        model.addAttribute("products", products);
+        return "product-list";
+    }
+
+    @GetMapping("/products/search")
+    public String searchProducts(@RequestParam(value = "query")String query, Model model){
+        List<Product> products = repository.searchProducts(query);
         model.addAttribute("products", products);
         return "product-list";
     }
