@@ -2,7 +2,6 @@ package com.assessmenttwo.app.controller;
 
 import com.assessmenttwo.app.model.Customer;
 import com.assessmenttwo.app.model.Order;
-import com.assessmenttwo.app.model.OrderLine;
 import com.assessmenttwo.app.model.Product;
 import com.assessmenttwo.app.repository.CustomerRepository;
 import com.assessmenttwo.app.repository.OrderRepository;
@@ -11,7 +10,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -44,10 +42,7 @@ public class OrderController {
 
     @GetMapping("/orders/add")
     public String createOrder(Model model){
-        Order order = new Order();/*
-        var line = OrderLine.builder().build();
-        order.setOrderLines(new ArrayList<OrderLine>());
-        order.getOrderLines().add(line);*/
+        Order order = new Order();
         List<Product> products = productRepository.findAll();
         List<Customer> customers = customerRepository.findAll();
         model.addAttribute("order", order);

@@ -1,10 +1,69 @@
-<!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout = "http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <title th:text="'Order - '+${order.id}"></title>
 </head>
-<body>
+<body layout:fragment="body" >
+
+<div class="row mt-4">
+    <div class="col">
+        <a class="btn btn-outline-dark" th:href="@{/orders}">
+            <i class="fa-solid fa-circle-chevron-left"></i> Back
+        </a>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xl-5 col-lg-6 col-md-12  align-self-start">
+        <div class="card mt-4 mb-3">
+            <div class="card-header">
+                <h2 th:text="'Order '+${order.id}"></h2>
+            </div>
+            <div class="card-body" >
+                <div class="mb-2">
+                    <p class="fw-semibold d-inline">Customer:</p>
+                    <p class="d-inline" th:text="${order.customer.firstName}+' '+${order.customer.lastName}+' (Id: '+${order.customer.id}+')'"></p>
+                </div>
+                <div class="mb-2">
+                    <p class="fw-semibold d-inline">Product:</p>
+                    <p class="d-inline" th:text="${order.product.name}+' - '+${order.product.description}"></p>
+                </div>
+                <div class="mb-2">
+                    <p class="fw-semibold d-inline">Item price:</p>
+                    <p class="d-inline" th:text="'$'+${#numbers.formatDecimal(order.product.price, 0, 'COMMA', 2, 'POINT')}"></p>
+                </div>
+                <div class="mb-2">
+                    <p class="fw-semibold d-inline">Quantity:</p>
+                    <p class="d-inline" th:text="${order.quantity}"></p>
+                </div>
+                <div class="mb-2">
+                    <p class="fw-semibold d-inline">Total price:</p>
+                    <p class="d-inline" th:text="'$'+${#numbers.formatDecimal(order.totalPrice, 0, 'COMMA', 2, 'POINT')}"></p>
+                </div>
+                <div class="mb-2">
+                    <p class="fw-semibold d-inline">Created on:</p>
+                    <p class="d-inline" th:text="${#temporals.format(order.createdOn, 'dd-MM-yyyy HH:mm')}"></p>
+                </div>
+                <div class="mb-2">
+                    <p class="fw-semibold d-inline">Updated on:</p>
+                    <p class="d-inline" th:if="${order.updatedOn != null}" th:text="${#temporals.format(order.updatedOn, 'dd-MM-yyyy HH:mm')}"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- other order related content here-->
+
+<div class="row align-items-center mt-5">
+    <div class="col text-center">
+        <a class="btn btn-danger btn-lg" th:href="@{/orders/{orderId}/delete(orderId=${order.id})}">
+            <i class="fa-solid fa-trash"></i> Delete
+        </a>
+    </div>
+</div>
+
 
 </body>
 </html>

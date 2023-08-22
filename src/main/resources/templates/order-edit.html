@@ -2,7 +2,7 @@
       xmlns:layout = "http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout}">
 <head>
-    <title>Add Order</title>
+    <title>Edit Order</title>
 </head>
 <body layout:fragment="body" >
 
@@ -18,10 +18,10 @@
     <div class="col-xl-5 col-lg-6 col-md-12  align-self-start">
         <div class="card mt-4 mb-3">
             <div class="card-header">
-                <h2>New Order</h2>
+                <h2>Update Order</h2>
             </div>
             <div class="card-body">
-                <form class="p-4" role="form" method="post" th:action="@{/orders/add}" th:object="${order}">
+                <form class="p-4" role="form" method="post" th:action="@{/orders/{orderId}/edit(orderId=${order.id})}" th:object="${order}">
                     <div class="form-floating mb-3">
                         <select
                                 type="text"
@@ -36,117 +36,41 @@
                         <label for="customerId" class="form-label">Customer</label>
                     </div>
 
-                    <!--<table id="tableContatos" class="table table-sm mb-0">
-                        <thead>
-                        <tr>
-                            <th scope="col">Nome Do Contato</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr th:each="line,itemStat : *{lines}">
-                            <td hidden="true">
-                                <input hidden th:id="*{lines[__${itemStat.index}__].id}" th:name="contatos" th:value="*{lines[__${itemStat.index}__].id}"/>
-                            </td>
-                            <td th:text="*{lines[__${itemStat.index}__].product}"></td>
-                        </tr>
-                        </tbody>
-                    </table>
-                    <div class="mt-3 row">
-                        <div class="col-12">
-
-                            <select class="h-100 single-select" id="selectContatos"> &lt;!&ndash;th:field="${lin}"&ndash;&gt;
-                                <option th:value="null" ></option>
-                                <option value="1" >Test</option>
-                                &lt;!&ndash;<option selected="selected" th:each="contato : ${listContatos}" th:id="${contato.id}" th:value="${contato.id}" th:text="${contato.nome}"></option>&ndash;&gt;
-                            </select>
-                            <input class="btn btn-light"   id="buttonAdicionarContato" type="button" value="Adicionar" name="Adicionar"/>
-                            <input class="btn btn-danger" id="buttonRemoverContato" type="button" value="Remover" name="Remover"/>
-
-
-                        </div>
+                    <div class="form-floating mb-3">
+                        <select
+                                type="text"
+                                class="form-select"
+                                id="productId"
+                                name="productId"
+                                th:field="*{product.id}">
+                            <option th:value="${null}" selected>Select Product</option>
+                            <option th:each="product : ${products}" th:value="${product.id}"
+                                    th:text="${product.id}+' - '+${product.name}+' - $'+${#numbers.formatDecimal(product.price, 0, 'COMMA', 2, 'POINT')}"></option>
+                        </select>
+                        <label for="productId" class="form-label">Customer</label>
                     </div>
--->
 
-
-
-
-
-                    <div class="card mb-4">
-                        <div class="card-header">
-                            <div class="row">
-                                <div class="col">
-                                    <a class="btn btn-outline-success" onclick="addOrderLine()"><i class="fa-solid fa-plus"></i></a>
-
-                                </div>
-                                <div class="col-auto">
-
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <table class="table table-hover">
-                            <thead>
-                            <tr>
-                                <th scope="col">Product</th>
-                                <th scope="col">Price</th>
-                                <th scope="col">Quantity</th>
-                                <th scope="col">Total</th>
-                                <th scope="col"></th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr th:each="line,status : *{orderLines}" class="align-middle" th:object="${line}">
-                                <td>
-                                    <div class="form-floating mb-3">
-                                        <select
-                                                class="form-select"
-                                                id="productId"
-                                                name="productId"
-                                                th:field="*{orderLines[__${status.index}__].product.id}">
-                                            <option th:each="product : ${products}" th:value="${product.id}"
-                                                    th:text="${product.id}+' - '+${product.name}+'    $'+${#numbers.formatDecimal(order.totalPrice, 0, 'COMMA', 2, 'POINT')}"></option>
-                                        </select>
-                                        <label for="productId" class="form-label">Product</label>
-                                    </div>
-                                </td>
-                                <td id="productPrice" th:text="'$'+${#numbers.formatDecimal(line.product.price, 0, 'COMMA', 2, 'POINT')}"></td>
-                                <td>
-                                    <div class="form-floating mb-3">
-                                        <select
-                                                class="form-select"
-                                                id="quantity"
-                                                name="quantity"
-                                                th:field="*{orderLines[__${status.index}__].quantity}">
-                                            <option th:each="i : ${#numbers.sequence(0, 10)}" th:value="${i}" th:text="${i}"
-                                                    th:selected="${i==1}"></option>
-                                        </select>
-                                        <label for="quantity" class="form-label">Quantity</label>
-                                    </div>
-                                </td>
-                                <td id="totalPrice" th:text="'$'+${#numbers.formatDecimal((line.product.price * line.quantity), 0, 'COMMA', 2, 'POINT')}"></td>
-                                <td class="text-end">
-                                    <button class="btn btn-outline-primary" onclick="">
-                                        <i class="fa-solid fa-eye"></i>
-                                    </button>
-                                    <button class="btn btn-outline-warning" >
-                                        <i class="fa-solid fa-pen-to-square"></i>
-                                    </button>
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
+                    <div class="form-floating mb-3">
+                        <select
+                                class="form-select"
+                                id="quantity"
+                                name="quantity"
+                                th:field="*{quantity}">
+                            <option th:each="i : ${#numbers.sequence(1, 10)}" th:value="${i}" th:text="${i}"
+                                    th:selected="${i==1}"></option>
+                        </select>
+                        <label for="quantity" class="form-label">Quantity</label>
                     </div>
 
                     <div class="row align-content-end mt-4">
-                        <div class="col"></div>
+                        <div class="col">
+
+                        </div>
                         <div class="col-auto">
                             <a class="btn btn-outline-danger ms-auto me-1" th:href="@{/orders}">Cancel</a>
-                            <button type="submit" class="btn btn-outline-primary ms-auto me-0">Add</button>
+                            <button type="submit" class="btn btn-outline-primary ms-auto me-0">Update</button>
                         </div>
                     </div>
-
                 </form>
             </div>
         </div>
