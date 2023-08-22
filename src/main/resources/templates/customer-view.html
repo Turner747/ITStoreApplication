@@ -18,7 +18,16 @@
     <div class="col-xl-5 col-lg-6 col-md-12  align-self-start">
         <div class="card mt-4 mb-3">
             <div class="card-header">
-                <h2 th:text="'Customer '+${customer.id}"></h2>
+                <div class="row">
+                    <div class="col">
+                        <h3 th:text="'Customer '+${customer.id}"></h3>
+                    </div>
+                    <div class="col-auto">
+                        <a class="btn btn-outline-warning" th:href="@{/customers/{customerId}/edit(customerId=${customer.id})}">
+                            <i class="fa-solid fa-pen-to-square"></i>
+                        </a>
+                    </div>
+                </div>
             </div>
             <div class="card-body" th:object="${customer}">
                 <div class="mb-2">
@@ -67,6 +76,52 @@
 </div>
 
 <!-- order table here-->
+<div class="card mt-4 mb-4">
+    <div class="card-header">
+        <div class="row">
+            <div class="col">
+                <h3 class="">Orders</h3>
+            </div>
+            <div class="col-auto">
+                <div class="btn-toolbar">
+                    <a class="btn btn-outline-success mt-auto mb-auto" th:href="@{/orders/add}"><i class="fa-solid fa-plus"></i></a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Customer</th>
+                <th scope="col">Total items</th>
+                <th scope="col">Total price</th>
+                <th scope="col">Created</th>
+                <th scope="col"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="order :${customer.orders}" class="align-middle">
+                <td th:text="${order.id}"></td>
+                <td th:text="${order.customer.firstName}+' '+${order.customer.lastName}"></td>
+                <td th:text="${order.totalItems}"></td>
+                <td th:text="'$'+${#numbers.formatDecimal(order.totalPrice, 0, 'COMMA', 2, 'POINT')}"></td>
+                <td th:text="${#temporals.format(order.createdOn, 'dd-MM-yyyy HH:mm')}"></td>
+                <td class="text-end">
+                    <a class="btn btn-outline-primary" th:href="@{/orders/{orderId}(orderId=${order.id})}">
+                        <i class="fa-solid fa-eye"></i>
+                    </a>
+                    <a class="btn btn-outline-warning" th:href="@{/orders/{orderId}/edit(orderId=${order.id})}">
+                        <i class="fa-solid fa-pen-to-square"></i>
+                    </a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
 
 <div class="row align-items-center mt-5">
     <div class="col text-center">

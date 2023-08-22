@@ -1,10 +1,67 @@
-<!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout = "http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Order</title>
 </head>
-<body>
+<body layout:fragment="body">
+<h1 class="mt-4 mb-3">Order</h1>
+<div class="card mb-4">
+    <div class="card-header">
+        <div class="row">
+            <div class="col">
+                <a class="btn btn-outline-success" th:href="@{/orders/add}"><i class="fa-solid fa-plus"></i></a>
 
+            </div>
+            <div class="col-auto">
+                <div class="btn-toolbar">
+                    <form th:action="@{/orders/search}" class="me-2">
+                        <div class="input-group">
+                            <span class="input-group-text" id="Search">Search</span>
+                            <input name="query"
+                                   class="form-control"
+                                   type="search"
+                                   placeholder="Search order number"
+                                   aria-label="Search">
+                        </div>
+                    </form>
+                    <a class="btn btn-outline-dark" th:href="@{/orders}"><i class="fa-solid fa-arrows-rotate"></i></a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Customer</th>
+                <th scope="col">Total items</th>
+                <th scope="col">Total price</th>
+                <th scope="col">Created</th>
+                <th scope="col"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="order :${orders}" class="align-middle">
+                <td th:text="${order.id}"></td>
+                <td th:text="${order.customer.firstName}+' '+${order.customer.lastName}"></td>
+                <td th:text="${order.totalItems}"></td>
+                <td th:text="'$'+${#numbers.formatDecimal(order.totalPrice, 0, 'COMMA', 2, 'POINT')}"></td>
+                <td th:text="${#temporals.format(order.createdOn, 'dd-MM-yyyy HH:mm')}"></td>
+                <td class="text-end">
+                    <a class="btn btn-outline-primary" th:href="@{/orders/{orderId}(orderId=${order.id})}">
+                        <i class="fa-solid fa-eye"></i>
+                    </a>
+                    <a class="btn btn-outline-warning" th:href="@{/orders/{orderId}/edit(orderId=${order.id})}">
+                        <i class="fa-solid fa-pen-to-square"></i>
+                    </a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
 </body>
 </html>

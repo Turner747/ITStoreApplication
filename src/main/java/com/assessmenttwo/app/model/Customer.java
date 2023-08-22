@@ -9,7 +9,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.Set;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -37,5 +37,5 @@ public class Customer {
     private LocalDateTime updatedOn;
 
     @OneToMany(mappedBy = "customer")
-    private Set<Order> orders;
+    private List<Order> orders;
 }
