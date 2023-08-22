@@ -28,26 +28,23 @@ public class Order {
     @JoinColumn(name = "customer_id")
     private Customer customer;
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "product_id")
+    private Product product;
+    private Integer quantity;
+
     @Transient
     private Double totalPrice;
-    @Transient
-    private Integer totalItems;
 
     @CreationTimestamp
+    @Column(name= "created_on", nullable = false, updatable = false)
     private LocalDateTime createdOn;
     @UpdateTimestamp
     private LocalDateTime updatedOn;
 
-    @OneToMany(mappedBy = "order", fetch = FetchType.EAGER)
-    private List<OrderLine> orderLines;
 
     @PostLoad
     private void onLoad(){
-        totalItems = 0;
-        totalPrice = 0.0;
-        for(var line : orderLines){
-            totalPrice += line.getProduct().getPrice() * line.getQuantity();
-            totalItems += line.getQuantity();
-        }
+        totalPrice = product.getPrice() * quantity;
     }
 }
