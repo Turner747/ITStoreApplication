@@ -21,21 +21,21 @@ public class ProductController {
     public String productList(Model model){
         List<Product> products = repository.findAll();
         model.addAttribute("products", products);
-        return "product-list";
+        return "product/product-list";
     }
 
     @GetMapping("/products/search")
     public String searchProducts(@RequestParam(value = "query")String query, Model model){
         List<Product> products = repository.searchProducts(query);
         model.addAttribute("products", products);
-        return "product-list";
+        return "product/product-list";
     }
 
     @GetMapping("/products/add")
     public String createProduct(Model model){
         Product product = new Product();
         model.addAttribute("product", product);
-        return "product-add";
+        return "product/product-add";
     }
 
     @PostMapping("/products/add")
@@ -48,14 +48,14 @@ public class ProductController {
     public String viewProduct(@PathVariable("productId")Long productId, Model model){
         Product product = repository.findById(productId).get();
         model.addAttribute("product", product);
-        return "product-view";
+        return "product/product-view";
     }
 
     @GetMapping("/products/{productId}/edit")
     public String editProduct(@PathVariable("productId")Long productId, Model model){
         Product product = repository.findById(productId).get();
         model.addAttribute("product", product);
-        return "product-edit";
+        return "product/product-edit";
     }
 
     @PostMapping("/products/{productId}/edit")
