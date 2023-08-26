@@ -36,30 +36,36 @@
                                         </div>
                                     </div>
                                     <div class="form-floating mb-3">
-                                        <input class="form-control" id="username" type="text" th:field="*{username}" placeholder="Create a username" />
+                                        <input th:class="'form-control '+${#fields.hasErrors('username') || userExists != null ? 'is-invalid' : ''}" id="username" type="text" th:field="*{username}" placeholder="Create a username" />
                                         <label for="username">Username</label>
+                                        <p th:if="${userExists != null}" class="text-danger" th:text="${userExists}"></p>
+                                        <p th:if="${#fields.hasErrors('username')}" class="text-danger" th:errors="*{username}"></p>
                                     </div>
                                     <div class="row mb-3">
                                         <div class="col-md-6">
-                                            <div class="form-floating mb-3 mb-md-0">
-                                                <input class="form-control" id="password" type="password" th:field="*{password}" placeholder="Create a password" />
+                                            <div class="form-floating mb-3 mb-md-0 has-validation">
+                                                <input th:class="'form-control '+${passwordError != null || #fields.hasErrors('password') ? 'is-invalid' : ''}" id="password" type="password" th:field="*{password}" placeholder="Create a password" />
                                                 <label for="password">Password</label>
                                             </div>
+                                            <p th:if="${passwordError != null}" class="text-danger" th:text="${passwordError}"></p>
+                                            <p th:if="${#fields.hasErrors('password')}" class="text-danger" th:errors="*{password}"></p>
                                         </div>
                                         <div class="col-md-6">
-                                            <div class="form-floating mb-3 mb-md-0">
-                                                <input class="form-control" id="passwordConfirm" type="password" th:field="*{passwordConfirm}" placeholder="Confirm password" />
+                                            <div class="form-floating mb-3 mb-md-0 has-validation">
+                                                <input th:class="'form-control '+${passwordError != null || #fields.hasErrors('password') ? 'is-invalid' : ''}" id="passwordConfirm" type="password" th:field="*{passwordConfirm}" placeholder="Confirm password" />
                                                 <label for="passwordConfirm">Confirm Password</label>
                                             </div>
                                         </div>
+
                                     </div>
+
                                     <div class="mt-4 mb-0">
-                                        <div class="d-grid"><button class="btn btn-primary btn-block" type="submit">Create Account</button></div>
+                                        <div class="d-grid"><button class="btn btn-primary btn-block" type="submit">Create User</button></div>
                                     </div>
                                 </form>
                             </div>
                             <div class="card-footer text-center py-3">
-                                <div class="small"><a th:href="@{/login}">Have an account? Go to login</a></div>
+                                <div class="small"><a th:href="@{/login}">Already a user? Go to login</a></div>
                             </div>
                         </div>
                     </div>
