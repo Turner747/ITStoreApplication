@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" >
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" th:href="@{/css/styles.css}">
@@ -20,7 +21,6 @@
         <i class="fas fa-bars"></i>
     </button>
 
-    <!-- Navbar todo may remove-->
     <ul class="navbar-nav ms-auto me-0 me-md-3 my-2 my-md-0">
         <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle"
@@ -34,7 +34,11 @@
 
             <ul class="dropdown-menu dropdown-menu-end"
                 aria-labelledby="navbarDropdown">
-                <li><a class="dropdown-item" href="#!">Logout</a></li>
+                <li>
+                    <form th:action="@{/logout}" method="post">
+                        <input class="dropdown-item" type="submit" value="Logout" th:value="Logout" />
+                    </form>
+                    <!--<a th:href="@{/logout}">Logout</a></li>-->
             </ul>
         </li>
     </ul>
@@ -67,9 +71,9 @@
                 </div>
             </div>
             <!-- todo maybe remove this-->
-            <div class="sb-sidenav-footer">
+            <div class="sb-sidenav-footer" sec:authorize="isAuthenticated()">
                 <div class="small">Logged in as:</div>
-                Username
+                <span sec:authentication="name"></span>
             </div>
         </nav>
     </div>
