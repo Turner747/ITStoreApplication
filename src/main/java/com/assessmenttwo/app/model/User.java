@@ -20,4 +20,8 @@ public class User {
     @Column(nullable = false, unique = true)
     private String username;
     private String password;
+    @Transient
+    private String passwordConfirm;
+    private String firstName;
+    private String lastName;
 }
