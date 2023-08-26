@@ -21,7 +21,7 @@ public class CustomerController {
     public String customerList(Model model){
         List<Customer> customers = repository.findAll();
         model.addAttribute("customers", customers);
-        return "customer-list";
+        return "customer/customer-list";
     }
 
     @GetMapping("/customers/search")
@@ -30,14 +30,14 @@ public class CustomerController {
     searchCustomers(@RequestParam(value = "query")String query, Model model){
         List<Customer> customers = repository.searchCustomers(query);
         model.addAttribute("customers", customers);
-        return "customer-list";
+        return "customer/customer-list";
     }
 
     @GetMapping("/customers/add")
     public String createCustomer(Model model){
         Customer customer = new Customer();
         model.addAttribute("customer", customer);
-        return "customer-add";
+        return "customer/customer-add";
     }
 
     @PostMapping("/customers/add")
@@ -50,14 +50,14 @@ public class CustomerController {
     public String viewCustomer(@PathVariable("customerId")Long customerId, Model model){
         Customer customer = repository.findById(customerId).get();
         model.addAttribute("customer", customer);
-        return "customer-view";
+        return "customer/customer-view";
     }
 
     @GetMapping("/customers/{customerId}/edit")
     public String editCustomer(@PathVariable("customerId")Long customerId, Model model){
         Customer customer = repository.findById(customerId).get();
         model.addAttribute("customer", customer);
-        return "customer-edit";
+        return "customer/customer-edit";
     }
 
     @PostMapping("/customers/{customerId}/edit")

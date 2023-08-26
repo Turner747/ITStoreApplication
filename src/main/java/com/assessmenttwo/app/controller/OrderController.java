@@ -29,7 +29,7 @@ public class OrderController {
     public String orderList(Model model){
         List<Order> orders = orderRepository.findAll();
         model.addAttribute("orders", orders);
-        return "order-list";
+        return "order/order-list";
     }
 
     @GetMapping("/orders/search")
@@ -37,7 +37,7 @@ public class OrderController {
         Long id = Long.parseLong(query);
         List<Order> orders = orderRepository.searchOrders(id);
         model.addAttribute("orders", orders);
-        return "order-list";
+        return "order/order-list";
     }
 
     @GetMapping("/orders/add")
@@ -48,7 +48,7 @@ public class OrderController {
         model.addAttribute("order", order);
         model.addAttribute("customers", customers);
         model.addAttribute("products", products);
-        return "order-add";
+        return "order/order-add";
     }
 
     @PostMapping("/orders/add")
@@ -61,7 +61,7 @@ public class OrderController {
     public String viewOrder(@PathVariable("orderId")Long orderId, Model model){
         Order order = orderRepository.findById(orderId).get();
         model.addAttribute("order", order);
-        return "order-view";
+        return "order/order-view";
     }
 
     @GetMapping("/orders/{orderId}/edit")
@@ -72,7 +72,7 @@ public class OrderController {
         model.addAttribute("customers", customers);
         model.addAttribute("products", products);
         model.addAttribute("order", order);
-        return "order-edit";
+        return "order/order-edit";
     }
 
     @PostMapping("/orders/{orderId}/edit")
