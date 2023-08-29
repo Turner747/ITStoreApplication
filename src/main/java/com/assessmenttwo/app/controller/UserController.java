@@ -1,6 +1,7 @@
 package com.assessmenttwo.app.controller;
 
 import com.assessmenttwo.app.model.User;
+import com.assessmenttwo.app.repository.RoleRepository;
 import com.assessmenttwo.app.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -19,11 +20,12 @@ public class UserController {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    private final UserRepository repository;
+    @Autowired
+    private UserRepository repository;
 
-    public UserController(UserRepository repo){
-        repository = repo;
-    }
+    @Autowired
+    private RoleRepository roleRepository;
+
 
     @GetMapping("/users/register")
     public String registerUserForm(Model model){
@@ -56,10 +58,10 @@ public class UserController {
         }
 
         user.setPassword(
-                passwordEncoder.encode(user.getPassword())
+            passwordEncoder.encode(user.getPassword())
         );
 
-        repository.save(user);
+        repository.addUser(user, roleRepository);
 
         return "redirect:/login";
     }
