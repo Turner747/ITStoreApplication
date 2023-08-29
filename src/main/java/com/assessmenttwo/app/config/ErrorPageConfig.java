@@ -12,6 +12,7 @@ public class ErrorPageConfig {
     public ErrorPageRegistrar errorPageRegistrar() {
         return registry -> {
             registry.addErrorPages(
+                    new ErrorPage(HttpStatus.BAD_REQUEST, "/400"),
                     new ErrorPage(HttpStatus.UNAUTHORIZED, "/401"),
                     new ErrorPage(HttpStatus.NOT_FOUND, "/404"),
                     new ErrorPage(HttpStatus.INTERNAL_SERVER_ERROR, "/500")
