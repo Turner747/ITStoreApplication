@@ -8,9 +8,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -72,5 +70,18 @@ public class UserController {
         List<User> users = userRepository.findAll();
         model.addAttribute("users", users);
         return "user/user-list";
+    }
+
+    @GetMapping("/users/manage/search")
+    public String searchCustomers(@RequestParam(value = "query")String query, Model model){
+        List<User> users = userRepository.searchUsers(query);
+        model.addAttribute("users", users);
+        return "user/user-list";
+    }
+
+    @GetMapping("/users/manage/{userId}/delete")
+    public String deleteCustomer(@PathVariable("userId")Long userId){
+        userRepository.deleteById(userId);
+        return "redirect:/users/manage";
     }
 }
