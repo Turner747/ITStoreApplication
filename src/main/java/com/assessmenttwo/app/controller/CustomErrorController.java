@@ -7,18 +7,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class CustomErrorController implements ErrorController {
 
+
     @RequestMapping("/401")
     public String handle401() {
-        return "error/error-401"; // This should match the name of your Thymeleaf or JSP template
+        return "error/error-401";
     }
 
     @RequestMapping("/404")
     public String handle404() {
-        return "error/error-404"; // This should match the name of your Thymeleaf or JSP template
+        return "error/error-404";
     }
 
     @RequestMapping("/500")
     public String handle500() {
-        return "error/error-500"; // This should match the name of your Thymeleaf or JSP template
+        return "error/error-500";
     }
 }

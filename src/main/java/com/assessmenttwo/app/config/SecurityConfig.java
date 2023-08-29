@@ -17,6 +17,10 @@ public class SecurityConfig{
         return http
                 .authorizeRequests()
                     .antMatchers("/js/**","/css/**","/img/**", "/users/register").permitAll()
+                    .antMatchers("/customers/**").hasAnyAuthority("CUSTOMER_PRIVILEGE")
+                    .antMatchers("/products/**").hasAnyAuthority("PRODUCT_PRIVILEGE")
+                    .antMatchers("/orders/**").hasAnyAuthority("ORDER_PRIVILEGE")
+                    .antMatchers("/users/manage").hasAnyAuthority("USER_PRIVILEGE")
                     .anyRequest().authenticated()
                     .and()
                 .formLogin()

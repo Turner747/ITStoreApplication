@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @Controller
 public class UserController {
@@ -21,7 +22,7 @@ public class UserController {
     private PasswordEncoder passwordEncoder;
 
     @Autowired
-    private UserRepository repository;
+    private UserRepository userRepository;
 
     @Autowired
     private RoleRepository roleRepository;
@@ -50,7 +51,7 @@ public class UserController {
             return "user-register";
         }
 
-        if(repository.findByUsername(user.getUsername()) != null){
+        if(userRepository.findByUsername(user.getUsername()) != null){
             String userExists = "Username already exists";
             model.addAttribute("userExists", userExists);
             model.addAttribute("user", user);
@@ -61,8 +62,15 @@ public class UserController {
             passwordEncoder.encode(user.getPassword())
         );
 
-        repository.addUser(user, roleRepository);
+        userRepository.addUser(user, roleRepository);
 
         return "redirect:/login";
+    }
+
+    @GetMapping("/users/manage")
+    public String userList(Model model){
+        List<User> users = userRepository.findAll();
+        model.addAttribute("users", users);
+        return "user/user-list";
     }
 }

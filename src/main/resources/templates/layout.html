@@ -38,7 +38,7 @@
                     <form th:action="@{/logout}" method="post">
                         <input class="dropdown-item" type="submit" value="Logout" th:value="Logout" />
                     </form>
-                    <!--<a th:href="@{/logout}">Logout</a></li>-->
+                </li>
             </ul>
         </li>
     </ul>
@@ -68,6 +68,16 @@
                         </div>
                         Products
                     </a>
+
+                    <div sec:authorize="hasRole('ROLE_ADMIN')" >
+                    <div class="sb-sidenav-menu-heading">Admin</div>
+                    <a class="nav-link" th:href="@{/users/manage}">
+                        <div class="sb-nav-link-icon">
+                            <i class="fa-solid fa-user"></i>
+                        </div>
+                        Users
+                    </a>
+                    </div>
                 </div>
             </div>
             <!-- todo maybe remove this-->
