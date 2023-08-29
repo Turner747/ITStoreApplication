@@ -17,13 +17,11 @@ public class SecurityConfig{
     SecurityFilterChain formSecurityFilterChain(HttpSecurity http) throws Exception {
         return http
                 .authorizeRequests()
-                    .antMatchers("/error", "/401", "/404", "/500").permitAll()
                     .antMatchers("/js/**","/css/**","/img/**", "/users/register").permitAll()
                     .antMatchers("/customers/**").hasAnyAuthority("CUSTOMER_PRIVILEGE")
                     .antMatchers("/products/**").hasAnyAuthority("PRODUCT_PRIVILEGE")
                     .antMatchers("/orders/**").hasAnyAuthority("ORDER_PRIVILEGE")
                     .antMatchers("/users/manage").hasAnyAuthority("USER_PRIVILEGE")
-                    .antMatchers("/**").permitAll()
                     .anyRequest().authenticated()
                     .and()
                 .formLogin()
