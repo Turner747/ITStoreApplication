@@ -34,6 +34,7 @@
 
             <ul class="dropdown-menu dropdown-menu-end"
                 aria-labelledby="navbarDropdown">
+                <li><a class="dropdown-item" th:href="@{/users/profile/{username}/edit(username=${#authentication.name})}">Edit profile</a></li>
                 <li>
                     <form th:action="@{/logout}" method="post">
                         <input class="dropdown-item" type="submit" value="Logout" th:value="Logout" />

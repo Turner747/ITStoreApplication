@@ -1,5 +1,6 @@
 package com.assessmenttwo.app.controller;
 
+import com.assessmenttwo.app.model.Customer;
 import com.assessmenttwo.app.model.User;
 import com.assessmenttwo.app.repository.RoleRepository;
 import com.assessmenttwo.app.repository.UserRepository;
@@ -83,5 +84,53 @@ public class UserController {
     public String deleteCustomer(@PathVariable("userId")Long userId){
         userRepository.deleteById(userId);
         return "redirect:/users/manage";
+    }
+
+    @GetMapping("/users/profile/{username}/edit")
+    public String editUserProfile(@PathVariable("username")String username, Model model){
+        User user = userRepository.findByUsername(username);
+        model.addAttribute("user", user);
+        return "user/user-edit";
+    }
+
+    @PostMapping("/users/profile/{userId}/edit")
+    public String updateUserProfile(@PathVariable("userId")Long userId, @ModelAttribute("user") User user,
+                                    BindingResult result, Model model){
+
+        User existingUser = userRepository.findById(userId).get();
+
+        if(user.getFirstName() != null && !user.getFirstName().equals("")){
+            existingUser.setFirstName(user.getFirstName());
+        }
+
+        if(user.getLastName() != null && !user.getLastName().equals("")){
+            existingUser.setLastName(user.getLastName());
+        }
+
+        if(user.getUsername() != null && !user.getUsername().equals("")){
+            if(userRepository.findByUsername(user.getUsername()) != null){
+                String userExists = "Username already exists";
+                model.addAttribute("userExists", userExists);
+                model.addAttribute("user", user);
+                return "user/user-edit";
+            }
+            existingUser.setUsername(user.getUsername());
+        }
+
+        if (user.getPassword() != null && !user.getPassword().equals("")) {
+            if (!user.getPassword().equals(user.getPasswordConfirm())) {
+                String passwordError = "Passwords do not match";
+                model.addAttribute("passwordError", passwordError);
+                model.addAttribute("user", user);
+                return "user/user-edit";
+            }
+
+            existingUser.setPassword(
+                    passwordEncoder.encode(user.getPassword())
+            );
+        }
+
+        userRepository.save(existingUser);
+        return "redirect:/login";
     }
 }
