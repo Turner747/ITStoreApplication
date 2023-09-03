@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
+import java.util.Collection;
 
 @Data
 @NoArgsConstructor
@@ -27,4 +28,13 @@ public class User {
     private String passwordConfirm;
     private String firstName;
     private String lastName;
+
+    @ManyToMany
+    @JoinTable(
+            name = "users_roles",
+            joinColumns = @JoinColumn(
+                    name = "user_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(
+                    name = "role_id", referencedColumnName = "id"))
+    private Collection<Role> roles;
 }

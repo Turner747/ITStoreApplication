@@ -1,0 +1,65 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout = "http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <title>Users</title>
+</head>
+<body layout:fragment="body">
+<h1 class="mt-4 mb-3">Users</h1>
+<div class="card mb-4">
+    <div class="card-header">
+        <div class="row">
+            <div class="col">
+
+            </div>
+            <div class="col-auto">
+                <div class="btn-toolbar">
+                    <form th:action="@{/users/manage/search}" class="me-2">
+                        <div class="input-group">
+                            <span class="input-group-text" id="Search">Search</span>
+                            <input name="query"
+                                   class="form-control"
+                                   type="search"
+                                   placeholder="Search username"
+                                   aria-label="Search">
+                        </div>
+                    </form>
+                    <a class="btn btn-outline-dark" th:href="@{/users/manage}"><i class="fa-solid fa-arrows-rotate"></i></a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Username</th>
+                <th scope="col">First name</th>
+                <th scope="col">Last name</th>
+                <th scope="col">Role(s)</th>
+                <th scope="col"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="user :${users}" class="align-middle">
+                <td th:text="${user.id}"></td>
+                <td th:text="${user.username}"></td>
+                <td th:text="${user.firstName}"></td>
+                <td th:text="${user.lastName}"></td>
+                <td>
+                    <i class="fst-normal" th:each="role : ${user.roles}" th:text="${role.name}"></i>
+                </td>
+                <td class="text-end">
+                    <a class="btn btn-outline-danger" th:href="@{/users/manage/{userId}/delete(userId=${user.id})}">
+                        <i class="fa-solid fa-trash"></i>
+                    </a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>

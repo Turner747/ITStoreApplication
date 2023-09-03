@@ -1,0 +1,76 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout = "http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <title>Edit Profile</title>
+</head>
+<body layout:fragment="body" >
+
+<div class="row mt-4">
+    <div class="col">
+        <a class="btn btn-outline-dark" th:href="@{/}">
+            <i class="fa-solid fa-circle-chevron-left"></i> Back
+        </a>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xl-5 col-lg-6 col-md-12  align-self-start">
+        <div class="card mt-4 mb-3">
+            <div class="card-header">
+                <h2>Update Profile</h2>
+            </div>
+            <div class="card-body">
+                <form method="post" th:action="@{/users/profile/{userId}/edit(userId=${user.id})}" th:object="${user}">
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <div class="form-floating mb-3 mb-md-0">
+                                <input class="form-control" id="firstname" type="text" th:field="*{firstName}" placeholder="Enter your first name" />
+                                <label for="firstName">First name</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                <input class="form-control" id="lastName" type="text" th:field="*{lastName}" placeholder="Enter your last name" />
+                                <label for="lastName">Last name</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input th:class="'form-control '+${#fields.hasErrors('username') || userExists != null ? 'is-invalid' : ''}" id="username" type="text" th:field="*{username}" placeholder="Create a username" />
+                        <label for="username">Username</label>
+                        <p th:if="${userExists != null}" class="text-danger" th:text="${userExists}"></p>
+                        <p th:if="${#fields.hasErrors('username')}" class="text-danger" th:errors="*{username}"></p>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <div class="form-floating mb-3 mb-md-0 has-validation">
+                                <input th:class="'form-control '+${passwordError != null || #fields.hasErrors('password') ? 'is-invalid' : ''}" id="password" type="password" th:field="*{password}" placeholder="Create a password" />
+                                <label for="password">Password</label>
+                            </div>
+                            <p th:if="${passwordError != null}" class="text-danger" th:text="${passwordError}"></p>
+                            <p th:if="${#fields.hasErrors('password')}" class="text-danger" th:errors="*{password}"></p>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-floating mb-3 mb-md-0 has-validation">
+                                <input th:class="'form-control '+${passwordError != null || #fields.hasErrors('password') ? 'is-invalid' : ''}" id="passwordConfirm" type="password" th:field="*{passwordConfirm}" placeholder="Confirm password" />
+                                <label for="passwordConfirm">Confirm Password</label>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="row align-content-end mt-4">
+                        <div class="col"></div>
+                        <div class="col-auto">
+                            <a class="btn btn-outline-danger ms-auto me-1" th:href="@{/}">Cancel</a>
+                            <button class="btn btn-outline-primary" type="submit">Update Profile</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
