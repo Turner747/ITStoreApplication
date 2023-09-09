@@ -25,104 +25,104 @@
                         <div class="form-floating mb-3">
                             <input
                                     type="text"
-                                    class="form-control"
+                                    th:class="'form-control '+${#fields.hasErrors('firstName') ? 'is-invalid' : ''}"
                                     id="firstName"
                                     name="firstName"
                                     th:field="*{firstName}"
                                     placeholder="First name">
                             <label for="firstName" class="form-label">First name</label>
+                            <p th:if="${#fields.hasErrors('firstName')}" class="text-danger" th:errors="*{firstName}"></p>
                         </div>
                         <div class="form-floating mb-3">
-
                             <input
                                     type="text"
-                                    class="form-control"
+                                    th:class="'form-control '+${#fields.hasErrors('lastName') ? 'is-invalid' : ''}"
                                     id="lastName"
                                     name="lastName"
                                     th:field="*{lastName}"
                                     placeholder="Last name">
                             <label for="lastName" class="form-label">Last name</label>
+                            <p th:if="${#fields.hasErrors('lastName')}" class="text-danger" th:errors="*{lastName}"></p>
                         </div>
 
                         <div class="row g-2 mt-4">
                             <div class="col-md">
                                 <div class="form-floating mb-3">
-
                                     <input
                                             type="email"
-                                            class="form-control"
+                                            th:class="'form-control '+${#fields.hasErrors('email') ? 'is-invalid' : ''}"
                                             id="email"
                                             name="email"
                                             th:field="*{email}"
                                             placeholder="Email">
                                     <label for="email" class="form-label">Email</label>
+                                    <p th:if="${#fields.hasErrors('email')}" class="text-danger" th:errors="*{email}"></p>
                                 </div>
                             </div>
                             <div class="col-md">
                                 <div class="form-floating mb-3">
-
                                     <input
                                             type="tel"
-                                            class="form-control"
+                                            th:class="'form-control '+${#fields.hasErrors('phone') ? 'is-invalid' : ''}"
                                             id="phone"
                                             name="phone"
                                             th:field="*{phone}"
                                             placeholder="Phone">
                                     <label for="phone" class="form-label">Phone</label>
+                                    <p th:if="${#fields.hasErrors('phone')}" class="text-danger" th:errors="*{phone}"></p>
                                 </div>
                             </div>
                         </div>
 
                         <div class="form-floating mb-3 mt-3">
-
                             <input
                                     type="text"
-                                    class="form-control"
+                                    th:class="'form-control '+${#fields.hasErrors('street') ? 'is-invalid' : ''}"
                                     id="street"
                                     name="street"
                                     th:field="*{street}"
                                     placeholder="Street address">
                             <label for="street" class="form-label">Address</label>
+                            <p th:if="${#fields.hasErrors('street')}" class="text-danger" th:errors="*{street}"></p>
                         </div>
                         <div class="row g-3">
                             <div class="col-md">
                                 <div class="form-floating mb-3">
-
                                     <input
                                             type="text"
-                                            class="form-control"
+                                            th:class="'form-control '+${#fields.hasErrors('suburb') ? 'is-invalid' : ''}"
                                             id="suburb"
                                             name="suburb"
                                             th:field="*{suburb}"
                                             placeholder="Suburb">
                                     <label for="suburb" class="form-label">Suburb</label>
+                                    <p th:if="${#fields.hasErrors('suburb')}" class="text-danger" th:errors="*{suburb}"></p>
                                 </div>
                             </div>
                             <div class="col-md">
-
                                 <div class="form-floating mb-3">
-
                                     <input
                                             type="text"
-                                            class="form-control"
+                                            th:class="'form-control '+${#fields.hasErrors('state') ? 'is-invalid' : ''}"
                                             id="state"
                                             name="state"
                                             th:field="*{state}"
                                             placeholder="State">
                                     <label for="state" class="form-label">State</label>
+                                    <p th:if="${#fields.hasErrors('state')}" class="text-danger" th:errors="*{state}"></p>
                                 </div>
                             </div>
                             <div class="col-md">
                                 <div class="form-floating mb-3">
-
                                     <input
                                             type="text"
-                                            class="form-control"
+                                            th:class="'form-control '+${#fields.hasErrors('postcode') ? 'is-invalid' : ''}"
                                             id="postcode"
                                             name="postcode"
                                             th:field="*{postcode}"
                                             placeholder="Postcode">
                                     <label for="postcode" class="form-label">Postcode</label>
+                                    <p th:if="${#fields.hasErrors('postcode')}" class="text-danger" th:errors="*{postcode}"></p>
                                 </div>
                             </div>
                         </div>

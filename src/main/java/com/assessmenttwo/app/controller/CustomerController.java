@@ -4,8 +4,10 @@ import com.assessmenttwo.app.model.Customer;
 import com.assessmenttwo.app.repository.CustomerRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Controller
@@ -39,7 +41,13 @@ public class CustomerController {
     }
 
     @PostMapping("/customers/add")
-    public String saveCustomer(@ModelAttribute("customer")Customer customer){
+    public String saveCustomer(@Valid @ModelAttribute("customer")Customer customer,
+                               BindingResult result, Model model){
+        if (result.hasErrors()){
+            model.addAttribute("customer", customer);
+            return "customer/customer-add";
+        }
+
         repository.save(customer);
         return "redirect:/customers";
     }
@@ -59,8 +67,15 @@ public class CustomerController {
     }
 
     @PostMapping("/customers/{customerId}/edit")
-    public String updateCustomer(@PathVariable("customerId")Long customerId, @ModelAttribute("customer")Customer customer){
-        customer.setId(customerId);
+    public String updateCustomer(@PathVariable("customerId")Long customerId,
+                                 @Valid @ModelAttribute("customer")Customer customer,
+                                 BindingResult result, Model model){
+
+        if (result.hasErrors()){
+            model.addAttribute("customer", customer);
+            return "customer/customer-edit";
+        }
+
         repository.save(customer);
         return "redirect:/customers";
     }

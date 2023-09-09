@@ -25,7 +25,7 @@
                     <div class="form-floating mb-3">
                         <select
                                 type="text"
-                                class="form-select"
+                                th:class="'form-select '+${customerError != null ? 'is-invalid' : ''}"
                                 id="customerId"
                                 name="customerId"
                                 th:field="*{customer.id}">
@@ -34,12 +34,13 @@
                                     th:text="${customer.firstName}+' '+${customer.lastName}+', '+${customer.email}"></option>
                         </select>
                         <label for="customerId" class="form-label">Customer</label>
+                        <p th:if="${customerError != null}" class="text-danger" th:text="${customerError}"></p>
                     </div>
 
                     <div class="form-floating mb-3">
                         <select
                                 type="text"
-                                class="form-select"
+                                th:class="'form-select '+${productError != null ? 'is-invalid' : ''}"
                                 id="productId"
                                 name="productId"
                                 th:field="*{product.id}">
@@ -48,11 +49,12 @@
                                     th:text="${product.id}+' - '+${product.name}+' - $'+${#numbers.formatDecimal(product.price, 0, 'COMMA', 2, 'POINT')}"></option>
                         </select>
                         <label for="productId" class="form-label">Customer</label>
+                        <p th:if="${productError != null}" class="text-danger" th:text="${productError}"></p>
                     </div>
 
                     <div class="form-floating mb-3">
                         <select
-                                class="form-select"
+                                th:class="'form-control '+${#fields.hasErrors('quantity') ? 'is-invalid' : ''}"
                                 id="quantity"
                                 name="quantity"
                                 th:field="*{quantity}">
@@ -60,6 +62,7 @@
                                     th:selected="${i==1}"></option>
                         </select>
                         <label for="quantity" class="form-label">Quantity</label>
+                        <p th:if="${#fields.hasErrors('quantity')}" class="text-danger" th:errors="*{quantity}"></p>
                     </div>
 
                     <div class="row align-content-end mt-4">

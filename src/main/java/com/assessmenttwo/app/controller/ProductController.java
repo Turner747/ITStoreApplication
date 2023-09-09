@@ -2,10 +2,13 @@ package com.assessmenttwo.app.controller;
 
 import com.assessmenttwo.app.model.Product;
 import com.assessmenttwo.app.repository.ProductRepository;
+import org.springframework.boot.Banner;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Controller
@@ -39,7 +42,13 @@ public class ProductController {
     }
 
     @PostMapping("/products/add")
-    public String saveProduct(@ModelAttribute("product")Product product){
+    public String saveProduct(@Valid @ModelAttribute("product")Product product,
+                              BindingResult result, Model model){
+        if (result.hasErrors()){
+            model.addAttribute("product", product);
+            return "product/product-add";
+        }
+
         repository.save(product);
         return "redirect:/products";
     }
@@ -59,8 +68,14 @@ public class ProductController {
     }
 
     @PostMapping("/products/{productId}/edit")
-    public String updateProduct(@PathVariable("productId")Long productId, @ModelAttribute("product")Product product){
-        product.setId(productId);
+    public String updateProduct(@PathVariable("productId")Long productId,
+                                @Valid @ModelAttribute("product")Product product,
+                                BindingResult result, Model model){
+        if (result.hasErrors()){
+            model.addAttribute("product", product);
+            return "product/product-edit";
+        }
+
         repository.save(product);
         return "redirect:/products";
     }

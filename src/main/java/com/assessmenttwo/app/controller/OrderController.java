@@ -8,8 +8,10 @@ import com.assessmenttwo.app.repository.OrderRepository;
 import com.assessmenttwo.app.repository.ProductRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Controller
@@ -52,7 +54,23 @@ public class OrderController {
     }
 
     @PostMapping("/orders/add")
-    public String saveOrder(@ModelAttribute("order")Order order){
+    public String saveOrder(@Valid @ModelAttribute("order")Order order,
+                            BindingResult result, Model model){
+        if (result.hasErrors()){
+            model.addAttribute("order", order);
+            return "order/order-add";
+        }
+        if(order.getCustomer().getId() == null || order.getProduct().getId() == null){
+            if (order.getCustomer().getId() == null){
+                model.addAttribute("customerError", "Select a customer");
+            }
+            if (order.getProduct().getId() == null){
+                model.addAttribute("productError", "Select a product");
+            }
+            model.addAttribute("order", order);
+            return "order/order-add";
+        }
+
         orderRepository.save(order);
         return "redirect:/orders";
     }
@@ -76,8 +94,34 @@ public class OrderController {
     }
 
     @PostMapping("/orders/{orderId}/edit")
-    public String updateOrder(@PathVariable("orderId")Long orderId, @ModelAttribute("order")Order order){
-        order.setId(orderId);
+    public String updateOrder(@PathVariable("orderId")Long orderId,
+                              @Valid @ModelAttribute("order")Order order,
+                              BindingResult result, Model model){
+        if (result.hasErrors()){
+            List<Product> products = productRepository.findAll();
+            List<Customer> customers = customerRepository.findAll();
+            model.addAttribute("customers", customers);
+            model.addAttribute("products", products);
+            model.addAttribute("order", order);
+            model.addAttribute("order", order);
+            return "order/order-edit";
+        }
+        if(order.getCustomer().getId() == null || order.getProduct().getId() == null){
+            if (order.getCustomer().getId() == null){
+                model.addAttribute("customerError", "Select a customer");
+            }
+            if (order.getProduct().getId() == null){
+                model.addAttribute("productError", "Select a product");
+            }
+            List<Product> products = productRepository.findAll();
+            List<Customer> customers = customerRepository.findAll();
+            model.addAttribute("customers", customers);
+            model.addAttribute("products", products);
+            model.addAttribute("order", order);
+            model.addAttribute("order", order);
+            return "order/order-edit";
+        }
+
         orderRepository.save(order);
         return "redirect:/orders";
     }

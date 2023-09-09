@@ -20,9 +20,9 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(nullable = false, unique = true)
-    @NotEmpty(message = "Username cannot be empty")
+    @NotEmpty(message = "Username must be provided")
     private String username;
-    @NotEmpty(message = "Password cannot be empty")
+    @NotEmpty(message = "Password must be provided")
     private String password;
     @Transient
     private String passwordConfirm;

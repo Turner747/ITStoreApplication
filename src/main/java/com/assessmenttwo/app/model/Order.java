@@ -9,6 +9,9 @@ import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.collection.internal.PersistentBag;
 
 import javax.persistence.*;
+import javax.validation.Valid;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +34,7 @@ public class Order {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "product_id")
     private Product product;
+    @NotNull(message = "Quantity must be provided")
     private Integer quantity;
 
     @Transient
