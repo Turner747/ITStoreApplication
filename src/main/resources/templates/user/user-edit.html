@@ -22,6 +22,7 @@
             </div>
             <div class="card-body">
                 <form method="post" th:action="@{/users/profile/{userId}/edit(userId=${user.id})}" th:object="${user}">
+                    <input type="hidden" th:field="*{id}" name="" id="">
                     <div class="row mb-3">
                         <div class="col-md-6">
                             <div class="form-floating mb-3 mb-md-0">

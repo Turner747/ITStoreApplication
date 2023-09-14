@@ -98,6 +98,7 @@ public class UserController {
                                     BindingResult result, Model model){
 
         User existingUser = userRepository.findById(userId).get();
+        Boolean usernameChanged = false;
 
         if(user.getFirstName() != null && !user.getFirstName().equals("")){
             existingUser.setFirstName(user.getFirstName());
@@ -108,13 +109,16 @@ public class UserController {
         }
 
         if(user.getUsername() != null && !user.getUsername().equals("")){
-            if(userRepository.findByUsername(user.getUsername()) != null){
-                String userExists = "Username already exists";
-                model.addAttribute("userExists", userExists);
-                model.addAttribute("user", user);
-                return "user/user-edit";
+            if (!user.getUsername().equals(existingUser.getUsername())){
+                if(userRepository.findByUsername(user.getUsername()) != null){
+                    String userExists = "Username already exists";
+                    model.addAttribute("userExists", userExists);
+                    model.addAttribute("user", user);
+                    return "user/user-edit";
+                }
+                existingUser.setUsername(user.getUsername());
+                usernameChanged = true;
             }
-            existingUser.setUsername(user.getUsername());
         }
 
         if (user.getPassword() != null && !user.getPassword().equals("")) {
@@ -131,6 +135,11 @@ public class UserController {
         }
 
         userRepository.save(existingUser);
-        return "redirect:/login";
+
+        if(usernameChanged){
+            return "redirect:/login";
+        }
+
+        return "redirect:/";
     }
 }
